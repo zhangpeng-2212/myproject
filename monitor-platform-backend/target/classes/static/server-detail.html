@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监控平台 - 服务器详情</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="common.js"></script>
+</head>
+<body>
+<div class="app-container">
+    <header class="app-header">
+        <h1>监控平台</h1>
+        <p>服务器详情 · 可视化分析 · 实时监控</p>
+    </header>
+
+    <main class="app-main">
+        <nav class="nav-links">
+            <a href="server.html" onclick="goBack()">← 返回服务器列表</a>
+        </nav>
+
+        <section class="content">
+            <!-- 服务器基本信息卡片 -->
+            <div class="card" id="server-info-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 id="server-name">服务器详情</h2>
+                    <div>
+                        <label style="margin-right: 10px;">
+                            <input type="checkbox" id="auto-refresh" onchange="toggleAutoRefresh()"> 自动刷新 (30秒)
+                        </label>
+                        <button onclick="refreshDetail()">刷新数据</button>
+                    </div>
+                </div>
+                <div class="server-detail-info" id="server-detail-info"></div>
+            </div>
+
+            <!-- 实时指标卡片 -->
+            <div class="card">
+                <h3>实时资源概览</h3>
+                <div class="resource-overview-grid">
+                    <div class="resource-card">
+                        <div class="resource-card-title">CPU使用率</div>
+                        <div class="resource-card-value" id="cpu-value">--%</div>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;" id="cpu-pie-chart"></div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-card-title">内存使用率</div>
+                        <div class="resource-card-value" id="memory-value">--%</div>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;" id="memory-pie-chart"></div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-card-title">磁盘使用率</div>
+                        <div class="resource-card-value" id="disk-value">--%</div>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;" id="disk-pie-chart"></div>
+                    </div>
+                    <div class="resource-card">
+                        <div class="resource-card-title">系统负载</div>
+                        <div class="resource-card-value" id="load-value">--</div>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;" id="load-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 历史趋势图表 -->
+            <div class="card">
+                <h3>资源使用趋势</h3>
+                <div id="trend-chart" style="width: 100%; min-height: 400px;"></div>
+            </div>
+
+            <!-- 网络流量图表 -->
+            <div class="card">
+                <h3>网络流量</h3>
+                <div id="network-chart" style="width: 100%; min-height: 350px;"></div>
+            </div>
+
+            <!-- 历史数据表格 -->
+            <div class="card">
+                <h3>历史监控数据 <span style="font-size: 12px; color: #999; font-weight: normal; margin-left: 10px;">（显示最近100条，数据会持续保存不会被覆盖）</span></h3>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>采集时间</th>
+                                <th>CPU使用率</th>
+                                <th>内存使用率</th>
+                                <th>磁盘使用率</th>
+                                <th>系统负载</th>
+                                <th>网络入 (MB/s)</th>
+                                <th>网络出 (MB/s)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="server-detail.js"></script>
+</body>
+</html>

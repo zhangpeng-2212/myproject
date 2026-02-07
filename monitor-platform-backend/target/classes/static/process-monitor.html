@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监控平台 - 进程管理</title>
+    <link rel="stylesheet" href="styles.css?v=1.1">
+    <script src="common.js?v=1.1"></script>
+    <script src="process-monitor.js?v=1.2"></script>
+</head>
+<body>
+<div class="app-container">
+    <header class="app-header">
+        <h1>监控平台</h1>
+        <p>进程管理 · 状态监控 · 资源分析</p>
+    </header>
+
+    <main class="app-main">
+        <nav class="nav-links">
+            <!-- <a href="dashboard.html">监控大屏</a> -->
+            <!-- <a href="index.html">服务监控</a> -->
+            <a href="server.html">服务器管理</a>
+            <a href="process-monitor.html" class="active">进程管理</a>
+            <!-- <a href="chat.html">智能问答</a> -->
+        </nav>
+
+        <section class="content">
+            <!-- 统计摘要 -->
+            <div class="stats-summary" id="stats-summary">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-total">0</div>
+                    <div class="stat-label">总进程数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-running">0</div>
+                    <div class="stat-label">运行中</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-stopped">0</div>
+                    <div class="stat-label">已停止</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-error">0</div>
+                    <div class="stat-label">异常</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>进程列表</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="filter-server" onchange="loadProcesses()">
+                            <option value="">所有服务器</option>
+                        </select>
+                        <select id="filter-status" onchange="loadProcesses()">
+                            <option value="">所有状态</option>
+                            <option value="running">运行中</option>
+                            <option value="stopped">已停止</option>
+                            <option value="error">异常</option>
+                        </select>
+                        <button onclick="showAddProcessModal()">添加进程</button>
+                    </div>
+                </div>
+
+                <div id="process-list" class="process-grid"></div>
+
+                <div id="empty-state" style="text-align: center; padding: 60px 20px; color: #999; display: none;">
+                    <p>暂无进程，点击"添加进程"开始创建</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- 添加进程弹窗 -->
+<div class="modal-overlay" id="add-process-modal">
+    <div class="modal">
+        <h2>添加进程</h2>
+        <form class="modal-form" id="add-process-form">
+            <label>
+                进程名称
+                <input type="text" id="process-name" required>
+            </label>
+            <label>
+                所属服务器
+                <select id="process-server" required>
+                    <option value="">请选择服务器</option>
+                </select>
+            </label>
+            <label>
+                进程类型
+                <select id="process-type" required>
+                    <option value="app">应用进程</option>
+                    <option value="database">数据库进程</option>
+                    <option value="cache">缓存进程</option>
+                    <option value="system">系统进程</option>
+                    <option value="other">其他进程</option>
+                </select>
+            </label>
+            <label>
+                端口（多个端口用逗号分隔）
+                <input type="text" id="process-ports" placeholder="例如: 8080,8081">
+            </label>
+            <label>
+                启动命令
+                <input type="text" id="process-start-cmd" placeholder="例如: /usr/bin/java -jar app.jar">
+            </label>
+            <label>
+                停止命令
+                <input type="text" id="process-stop-cmd" placeholder="例如: /usr/bin/kill -15 ${PID}">
+            </label>
+            <label>
+                描述
+                <textarea id="process-desc" rows="2"></textarea>
+            </label>
+            <label>
+                <input type="checkbox" id="process-autostart" checked> 自动启动
+            </label>
+            <div class="modal-actions">
+                <button type="button" onclick="hideAddProcessModal()">取消</button>
+                <button type="submit">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 进程详情弹窗 -->
+<div class="modal-overlay" id="process-detail-modal">
+    <div class="modal large-modal">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 id="detail-process-name">进程详情</h2>
+            <button onclick="hideDetailModal()" style="padding: 6px 12px;">关闭</button>
+        </div>
+        <div id="process-detail-content"></div>
+    </div>
+</div>
+
+<!-- 线程列表弹窗 -->
+<div class="modal-overlay" id="thread-list-modal">
+    <div class="modal large-modal">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h2 id="thread-list-title">线程监控</h2>
+                <div id="thread-stats" style="margin-top: 10px; font-size: 13px; color: #666;"></div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="generateHotspotTestData()" style="padding: 6px 12px;">📊 生成测试数据</button>
+                <button onclick="analyzeHotspots()" style="padding: 6px 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">🔍 AI热点分析</button>
+                <button onclick="collectThreadData()" style="padding: 6px 12px;">采集数据</button>
+                <button onclick="hideThreadModal()" style="padding: 6px 12px;">关闭</button>
+            </div>
+        </div>
+        <div style="margin-bottom: 15px; display: flex; gap: 10px;">
+            <select id="filter-thread-state" onchange="filterThreads()">
+                <option value="">所有状态</option>
+                <option value="RUNNABLE">运行中</option>
+                <option value="WAITING">等待</option>
+                <option value="TIMED_WAITING">限时等待</option>
+                <option value="BLOCKED">阻塞</option>
+            </select>
+        </div>
+        <div id="thread-list" style="max-height: 500px; overflow-y: auto;"></div>
+    </div>
+</div>
+
+<!-- 线程堆栈弹窗 -->
+<div class="modal-overlay" id="thread-stack-modal">
+    <div class="modal large-modal">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 id="thread-stack-title">线程堆栈</h2>
+            <button onclick="hideStackModal()" style="padding: 6px 12px;">关闭</button>
+        </div>
+        <div id="thread-stack-content" style="max-height: 600px; overflow-y: auto;"></div>
+    </div>
+</div>
+
+<!-- AI热点分析结果弹窗 -->
+<div class="modal-overlay" id="hotspot-analysis-modal">
+    <div class="modal large-modal hotspot-modal" style="max-width: 1100px; display: flex; flex-direction: column;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-shrink: 0; padding-bottom: 15px; border-bottom: 2px solid #e8e8e8;">
+            <div>
+                <h2 style="display: flex; align-items: center; gap: 8px; margin: 0; font-size: 22px; color: #333;">
+                    <span>🔍</span>
+                    <span>线程热点AI分析</span>
+                </h2>
+                <div id="hotspot-summary" style="margin-top: 8px; font-size: 14px; color: #666; font-weight: 500;"></div>
+            </div>
+            <button onclick="hideHotspotModal()" class="modal-close-btn" style="padding: 10px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3); transition: all 0.3s ease;">关闭</button>
+        </div>
+
+        <div id="hotspot-analysis-content" class="hotspot-content" style="flex: 1; overflow-y: auto; padding-right: 10px;">
+            <!-- 健康评分卡片 -->
+            <div id="health-score-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 25px; text-align: center; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                <div style="font-size: 16px; margin-bottom: 8px; opacity: 0.95;">系统健康评分</div>
+                <div id="health-score-value" style="font-size: 56px; font-weight: bold; margin-bottom: 5px;">0</div>
+                <div id="health-score-label" style="font-size: 16px; opacity: 0.95; font-weight: 500;"></div>
+            </div>
+
+            <!-- 热点问题统计 -->
+            <div id="hotspot-stats" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px;">
+                <div style="background: #fff5f5; padding: 15px; border-radius: 8px; border-left: 4px solid #ff4d4f;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 5px;">严重问题</div>
+                    <div id="stat-critical" style="font-size: 24px; font-weight: bold; color: #ff4d4f;">0</div>
+                </div>
+                <div style="background: #fff7e6; padding: 15px; border-radius: 8px; border-left: 4px solid #fa8c16;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 5px;">高优先级</div>
+                    <div id="stat-high" style="font-size: 24px; font-weight: bold; color: #fa8c16;">0</div>
+                </div>
+                <div style="background: #fffbe6; padding: 15px; border-radius: 8px; border-left: 4px solid #faad14;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 5px;">中优先级</div>
+                    <div id="stat-medium" style="font-size: 24px; font-weight: bold; color: #faad14;">0</div>
+                </div>
+                <div style="background: #f0f5ff; padding: 15px; border-radius: 8px; border-left: 4px solid #597ef7;">
+                    <div style="font-size: 12px; color: #666; margin-bottom: 5px;">总热点数</div>
+                    <div id="stat-total" style="font-size: 24px; font-weight: bold; color: #597ef7;">0</div>
+                </div>
+            </div>
+
+            <!-- 热点方法列表 -->
+            <div style="margin-bottom: 20px;">
+                <h3 style="margin: 0 0 15px 0; font-size: 16px; color: #333; font-weight: 600;">🔥 热点方法详情</h3>
+                <div id="hotspot-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            </div>
+
+            <!-- 分析说明 -->
+            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 8px; font-size: 13px; color: #666;">
+                <strong style="color: #333; font-size: 14px;">📊 分析说明：</strong>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li><strong>热点方法</strong>：在所有线程堆栈中出现频率最高的方法，可能影响系统性能</li>
+                    <li><strong>严重级别</strong>：⭐⭐⭐⭐⭐ (5-最严重, 1-轻微)</li>
+                    <li><strong>健康评分</strong>：80-100良好, 60-79一般, 0-59需关注</li>
+                    <li><strong>优化建议</strong>：每个热点都提供针对性的优化建议，请优先处理高严重级别问题</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="hotspot-loading" style="display: none; text-align: center; padding: 60px; flex-shrink: 0;">
+            <div style="font-size: 48px; margin-bottom: 15px; animation: spin 1s linear infinite;">🔄</div>
+            <div style="font-size: 16px; color: #666;">AI正在分析线程数据...</div>
+            <div style="font-size: 13px; color: #999; margin-top: 10px;">请稍候</div>
+        </div>
+
+        <div id="hotspot-empty" style="display: none; text-align: center; padding: 60px; flex-shrink: 0;">
+            <div style="font-size: 64px; margin-bottom: 20px;">📭</div>
+            <div style="font-size: 18px; color: #666; margin-bottom: 10px;">暂无线程数据</div>
+            <div style="font-size: 14px; color: #999;">请先点击"生成测试数据"或"采集数据"按钮</div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.hotspot-item {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.hotspot-item:hover {
+    border-color: #667eea;
+    box-shadow: 0 2px 12px rgba(102, 126, 234, 0.15);
+}
+
+.hotspot-item.critical {
+    border-left: 4px solid #ff4d4f;
+}
+
+.hotspot-item.high {
+    border-left: 4px solid #fa8c16;
+}
+
+.hotspot-item.medium {
+    border-left: 4px solid #faad14;
+}
+
+.hotspot-item.low {
+    border-left: 4px solid #52c41a;
+}
+
+.hotspot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.hotspot-rank {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.hotspot-info {
+    flex: 1;
+}
+
+.hotspot-class {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 5px;
+    word-break: break-all;
+}
+
+.hotspot-method {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.hotspot-meta {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.hotspot-count {
+    background: #f0f5ff;
+    color: #597ef7;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.hotspot-type {
+    background: #fff7e6;
+    color: #fa8c16;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.hotspot-severity {
+    display: flex;
+    gap: 2px;
+    font-size: 14px;
+}
+
+.hotspot-suggestion {
+    margin-top: 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, #f6f8ff 0%, #f0f5ff 100%);
+    border-radius: 6px;
+    border-left: 3px solid #667eea;
+}
+
+.hotspot-suggestion-title {
+    font-size: 13px;
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.hotspot-suggestion-content {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 自定义滚动条 */
+.hotspot-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.hotspot-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.hotspot-content::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.hotspot-content::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+</style>
+
+</body>
+</html>

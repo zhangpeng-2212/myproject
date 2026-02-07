@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监控平台 - 服务器管理</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="common.js"></script>
+</head>
+<body>
+<div class="app-container">
+    <header class="app-header">
+        <h1>监控平台</h1>
+        <p>服务器管理 · 资源监控 · 实时分析</p>
+    </header>
+
+    <main class="app-main">
+        <nav class="nav-links">
+            <!-- <a href="dashboard.html">监控大屏</a> -->
+            <!-- <a href="index.html">服务监控</a> -->
+            <a href="server.html" class="active">服务器管理</a>
+            <a href="process-monitor.html">进程管理</a>
+            <!-- <a href="chat.html">智能问答</a> -->
+        </nav>
+
+        <section class="content">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>服务器列表</h2>
+                    <button onclick="showAddServerModal()">添加服务器</button>
+                </div>
+
+                <div id="server-list" class="server-grid"></div>
+
+                <div id="empty-state" style="text-align: center; padding: 60px 20px; color: #999; display: none;">
+                    <p>暂无服务器，点击"添加服务器"开始创建</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<div class="modal-overlay" id="add-server-modal">
+    <div class="modal">
+        <h2>添加服务器</h2>
+        <form class="modal-form" id="add-server-form">
+            <label>
+                服务器名称
+                <input type="text" id="server-name" required>
+            </label>
+            <label>
+                IP地址
+                <input type="text" id="server-ip" placeholder="192.168.1.1">
+            </label>
+            <label>
+                服务器类型
+                <select id="server-type" required>
+                    <option value="app">应用服务器</option>
+                    <option value="db">数据库服务器</option>
+                    <option value="cache">缓存服务器</option>
+                    <option value="message-queue">消息队列</option>
+                    <option value="storage">存储服务器</option>
+                </select>
+            </label>
+            <label>
+                环境
+                <input type="text" id="server-env" placeholder="prod / test 等">
+            </label>
+            <label>
+                CPU核心数
+                <input type="number" id="server-cpu" min="1" placeholder="例如: 4">
+            </label>
+            <label>
+                总内存 (GB)
+                <input type="number" id="server-memory" min="1" step="0.1" placeholder="例如: 16">
+            </label>
+            <label>
+                总磁盘 (GB)
+                <input type="number" id="server-disk" min="1" step="1" placeholder="例如: 500">
+            </label>
+            <label>
+                描述
+                <textarea id="server-desc" rows="2"></textarea>
+            </label>
+            <div class="modal-actions">
+                <button type="button" onclick="hideAddServerModal()">取消</button>
+                <button type="submit">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="server.js"></script>
+</body>
+</html>

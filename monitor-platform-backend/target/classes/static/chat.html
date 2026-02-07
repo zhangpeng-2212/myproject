@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监控平台 - 智能问答</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="common.js"></script>
+</head>
+<body>
+<div class="app-container">
+    <header class="app-header">
+        <h1>监控平台</h1>
+        <p>智能问答 · 自然语言查询 · 智能助手</p>
+    </header>
+
+    <main class="app-main">
+        <nav class="nav-links">
+            <!-- <a href="dashboard.html">监控大屏</a> -->
+            <!-- <a href="index.html">服务监控</a> -->
+            <a href="server.html">服务器管理</a>
+            <!-- <a href="chat.html" class="active">智能问答</a> -->
+        </nav>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <h1>智能问答助手</h1>
+                <p>基于监控数据的智能问答系统，可以帮您查询服务、服务器、异常事件等信息</p>
+                <div class="suggestions">
+                    <span class="suggestion-chip" onclick="askSuggestion('系统健康状态如何？')">系统健康状态如何？</span>
+                    <span class="suggestion-chip" onclick="askSuggestion('有多少个服务？')">有多少个服务？</span>
+                    <span class="suggestion-chip" onclick="askSuggestion('服务器资源使用情况')">服务器资源使用情况</span>
+                    <span class="suggestion-chip" onclick="askSuggestion('最近的异常事件')">最近的异常事件</span>
+                    <span class="suggestion-chip" onclick="askSuggestion('按环境统计服务')">按环境统计服务</span>
+                    <span class="suggestion-chip" onclick="askSuggestion('系统统计概览')">系统统计概览</span>
+                </div>
+            </div>
+
+            <div class="chat-box">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message system">
+                        <div class="message-content">您好！我是监控平台的智能问答助手。我可以帮您查询以下信息：
+
+1. 服务信息（服务数量、列表、按环境分布等）
+2. 服务器信息（服务器数量、在线状态、资源使用等）
+3. 异常事件（最近异常、告警统计、严重级别等）
+4. 监控指标（响应时间、指标数据等）
+5. 资源使用（CPU、内存、磁盘使用情况等）
+6. 系统健康状态
+7. 统计信息
+
+请告诉我您想了解什么信息？</div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input" placeholder="输入您的问题..." onkeypress="handleKeyPress(event)">
+                    <button onclick="sendMessage()" id="send-button">发送</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="chat.js"></script>
+</body>
+</html>

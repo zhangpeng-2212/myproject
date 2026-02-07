@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI热点分析测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            background: #667eea;
+            color: white;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            font-family: monospace;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            background: #e7f3ff;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 AI热点分析测试工具</h1>
+
+    <div class="section">
+        <h2>1. 生成热点测试数据</h2>
+        <p>选择进程并生成线程数据和堆栈数据：</p>
+        <div style="margin: 10px 0;">
+            <label>
+                <input type="radio" name="processSelect" value="2" checked onchange="selectProcess(2)">
+                Java应用服务 (ID: 2)
+            </label>
+            <label style="margin-left: 20px;">
+                <input type="radio" name="processSelect" value="5" onchange="selectProcess(5)">
+                MySQL (ID: 5)
+            </label>
+        </div>
+        <input type="number" id="processId" value="2" placeholder="进程ID" style="padding: 8px; width: 100px;">
+        <button onclick="generateHotspotData()">生成测试数据</button>
+        <div id="genStatus" class="status"></div>
+    </div>
+
+    <div class="section">
+        <h2>2. 执行AI热点分析</h2>
+        <p>分析线程堆栈中的热点方法</p>
+        <button onclick="analyzeHotspots()">执行分析</button>
+        <div id="analyzeStatus" class="status"></div>
+    </div>
+
+    <div class="section">
+        <h2>3. API响应结果</h2>
+        <button onclick="clearResult()">清空</button>
+        <textarea id="result" readonly placeholder="API响应将显示在这里..."></textarea>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8080/api';
+
+        function selectProcess(processId) {
+            document.getElementById('processId').value = processId;
+            clearResult();
+        }
+
+        async function generateHotspotData() {
+            const processId = document.getElementById('processId').value;
+            const statusEl = document.getElementById('genStatus');
+
+            statusEl.innerHTML = '⏳ 正在生成测试数据...';
+            statusEl.className = 'status';
+
+            try {
+                const response = await fetch(`${API_BASE}/processes/${processId}/threads/collect-hotspot`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    const processName = processId === '5' ? 'MySQL' : 'Java应用服务';
+                    statusEl.innerHTML = `✅ ${processName} - ${result.message}`;
+                    statusEl.className = 'status success';
+                    document.getElementById('result').value = JSON.stringify(result, null, 2);
+                } else {
+                    throw new Error(result.message || '生成失败');
+                }
+            } catch (error) {
+                statusEl.innerHTML = `❌ 错误: ${error.message}`;
+                statusEl.className = 'status error';
+                console.error('生成数据错误:', error);
+            }
+        }
+
+        async function analyzeHotspots() {
+            const processId = document.getElementById('processId').value;
+            const statusEl = document.getElementById('analyzeStatus');
+
+            statusEl.innerHTML = '⏳ 正在执行AI分析...';
+            statusEl.className = 'status';
+
+            try {
+                const response = await fetch(`${API_BASE}/processes/${processId}/threads/analyze`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.code === 200) {
+                    statusEl.innerHTML = '✅ 分析成功！';
+                    statusEl.className = 'status success';
+
+                    // 格式化显示结果
+                    const formatted = JSON.stringify(result, null, 2);
+                    document.getElementById('result').value = formatted;
+
+                    // 详细显示分析结果
+                    if (result.data && result.data.topHotspots) {
+                        const hotspots = result.data.topHotspots;
+                        statusEl.innerHTML += `<br>📊 检测到 ${hotspots.length} 个热点方法<br>⭐ 健康评分: ${result.data.healthScore}/100`;
+                    }
+                } else {
+                    throw new Error(result.message || '分析失败');
+                }
+            } catch (error) {
+                statusEl.innerHTML = `❌ 错误: ${error.message}`;
+                statusEl.className = 'status error';
+                console.error('分析错误:', error);
+            }
+        }
+
+        function clearResult() {
+            document.getElementById('result').value = '';
+            document.getElementById('genStatus').innerHTML = '';
+            document.getElementById('genStatus').className = 'status';
+            document.getElementById('analyzeStatus').innerHTML = '';
+            document.getElementById('analyzeStatus').className = 'status';
+        }
+    </script>
+</body>
+</html>

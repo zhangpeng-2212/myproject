@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: monitor-platform-backend
+
+monitor:
+  storage-dir: data
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+

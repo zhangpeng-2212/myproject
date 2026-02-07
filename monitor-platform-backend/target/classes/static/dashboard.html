@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监控平台 - 数据大屏</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="common.js"></script>
+</head>
+<body>
+<div class="app-container">
+    <header class="app-header">
+        <h1>监控平台</h1>
+        <p>数据大屏 · 实时监控 · 智能分析</p>
+    </header>
+
+    <main class="app-main">
+        <nav class="nav-links">
+            <!-- <a href="dashboard.html" class="active">监控大屏</a> -->
+            <!-- <a href="index.html">服务监控</a> -->
+            <a href="server.html">服务器管理</a>
+            <!-- <a href="chat.html">智能问答</a> -->
+        </nav>
+
+        <div class="dashboard-container">
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <h3>总服务数</h3>
+                    <div class="value" id="total-services">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>在线服务</h3>
+                    <div class="value online" id="online-services">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>总服务器数</h3>
+                    <div class="value" id="total-servers">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>在线服务器</h3>
+                    <div class="value online" id="online-servers">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>最近24小时异常</h3>
+                    <div class="value" id="recent-anomalies">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>今日异常</h3>
+                    <div class="value" id="today-anomalies">-</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-section">
+                    <h2>服务器资源</h2>
+                    <ul class="stat-list">
+                        <li>
+                            <span class="label">总CPU核心数</span>
+                            <span class="value" id="total-cpu-cores">-</span>
+                        </li>
+                        <li>
+                            <span class="label">总内存 (GB)</span>
+                            <span class="value" id="total-memory">-</span>
+                        </li>
+                        <li>
+                            <span class="label">总磁盘 (GB)</span>
+                            <span class="value" id="total-disk">-</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="dashboard-section">
+                    <h2>异常统计</h2>
+                    <ul class="stat-list">
+                        <li>
+                            <span class="label" style="color: #f5222d;">高严重级别</span>
+                            <span class="value error" id="high-severity">-</span>
+                        </li>
+                        <li>
+                            <span class="label" style="color: #faad14;">中严重级别</span>
+                            <span class="value warning" id="medium-severity">-</span>
+                        </li>
+                        <li>
+                            <span class="label" style="color: #52c41a;">低严重级别</span>
+                            <span class="value" id="low-severity">-</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-section">
+                    <h2>按环境统计服务</h2>
+                    <ul class="stat-list" id="services-by-env"></ul>
+                </div>
+
+                <div class="dashboard-section">
+                    <h2>按类型统计服务器</h2>
+                    <ul class="stat-list" id="servers-by-type"></ul>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h2>最近异常事件</h2>
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>严重级别</th>
+                        <th>服务ID</th>
+                        <th>评分</th>
+                        <th>原因</th>
+                    </tr>
+                    </thead>
+                    <tbody id="recent-anomalies-list"></tbody>
+                </table>
+            </div>
+
+            <div class="dashboard-section">
+                <h2>服务指标趋势</h2>
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th>服务名称</th>
+                        <th>平均响应时间 (ms)</th>
+                        <th>最大响应时间 (ms)</th>
+                        <th>最小响应时间 (ms)</th>
+                        <th>最后更新</th>
+                    </tr>
+                    </thead>
+                    <tbody id="metric-trends-list"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>

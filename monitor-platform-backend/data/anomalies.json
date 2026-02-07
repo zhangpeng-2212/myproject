@@ -1,0 +1,61 @@
+[ {
+  "id" : 1,
+  "serviceId" : 2,
+  "metricName" : "responseTime",
+  "startTime" : "2026-02-05 11:27:34",
+  "endTime" : "2026-02-05 11:27:34",
+  "severity" : "high",
+  "score" : 544.0586794939474,
+  "reason" : "最新值 100000.57 高于历史均值 260.65，波动 183.33 个标准差（score=544.06），判定为异常。",
+  "createdAt" : "2026-02-05 11:28:15"
+}, {
+  "id" : 2,
+  "serviceId" : 2,
+  "metricName" : "responseTime",
+  "startTime" : "2026-02-05 11:27:34",
+  "endTime" : "2026-02-05 11:27:34",
+  "severity" : "high",
+  "score" : 544.0586794939474,
+  "reason" : "最新值 100000.57 高于历史均值 260.65，波动 183.33 个标准差（score=544.06），判定为异常。",
+  "createdAt" : "2026-02-05 11:28:51"
+}, {
+  "id" : 3,
+  "serviceId" : 1,
+  "metricName" : "responseTime",
+  "startTime" : "2026-02-05 11:23:10",
+  "endTime" : "2026-02-05 11:23:10",
+  "severity" : "low",
+  "score" : -0.1994933005113362,
+  "reason" : "最新值 138.56 高于历史均值 1950.35，波动 9081.96 个标准差（score=-0.20），判定为异常。",
+  "createdAt" : "2026-02-05 11:29:20"
+}, {
+  "id" : 4,
+  "serviceId" : 1,
+  "metricName" : "responseTime",
+  "startTime" : "2026-02-05 11:23:10",
+  "endTime" : "2026-02-05 11:23:10",
+  "severity" : "low",
+  "score" : -0.1994933005113362,
+  "reason" : "最新值 138.56 高于历史均值 1950.35，波动 9081.96 个标准差（score=-0.20），判定为异常。",
+  "createdAt" : "2026-02-05 11:29:43"
+}, {
+  "id" : 5,
+  "serviceId" : 1,
+  "metricName" : "responseTime",
+  "startTime" : "2026-02-05 11:23:10",
+  "endTime" : "2026-02-05 11:23:10",
+  "severity" : "low",
+  "score" : -0.1994933005113362,
+  "reason" : "最新值 138.56 高于历史均值 1950.35，波动 9081.96 个标准差（score=-0.20），判定为异常。",
+  "createdAt" : "2026-02-05 11:29:50"
+}, {
+  "id" : 6,
+  "serviceId" : 2,
+  "metricName" : "responseTime",
+  "startTime" : "2026-02-05 11:27:34",
+  "endTime" : "2026-02-05 11:27:34",
+  "severity" : "high",
+  "score" : 544.0586794939474,
+  "reason" : "最新值 100000.57 高于历史均值 260.65，波动 183.33 个标准差（score=544.06），判定为异常。",
+  "createdAt" : "2026-02-05 11:30:20"
+} ]

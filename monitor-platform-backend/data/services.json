@@ -1,0 +1,15 @@
+[ {
+  "id" : 1,
+  "name" : "人力资源",
+  "env" : "test",
+  "description" : "1",
+  "metricEndpoint" : null,
+  "createdAt" : "2026-02-05 11:22:56"
+}, {
+  "id" : 2,
+  "name" : "人力资源",
+  "env" : "prod",
+  "description" : "2",
+  "metricEndpoint" : null,
+  "createdAt" : "2026-02-05 11:23:05"
+} ]
