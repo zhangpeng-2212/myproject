@@ -7,10 +7,9 @@
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) fixed;
+    background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%) fixed;
     color: #333;
     min-height: 100vh;
-    will-change: transform;
 }
 
 .app-container {
@@ -21,20 +20,23 @@ body {
 }
 
 .app-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+    color: #0369a1;
     padding: 24px 32px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 12px rgba(14, 165, 233, 0.08);
     position: relative;
     overflow: hidden;
-    will-change: transform;
+    border-bottom: 2px solid rgba(14, 165, 233, 0.15);
 }
 
 .app-header h1 {
     margin: 0;
     font-size: 28px;
     font-weight: 700;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #0369a1 0%, #0891b2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     position: relative;
     z-index: 1;
 }
@@ -42,9 +44,10 @@ body {
 .app-header p {
     margin: 8px 0 0 0;
     font-size: 14px;
-    opacity: 0.9;
+    opacity: 0.8;
     position: relative;
     z-index: 1;
+    color: #0891b2;
 }
 
 .app-main {
@@ -66,25 +69,28 @@ body {
     padding: 10px 24px;
     text-decoration: none;
     background: rgba(255, 255, 255, 0.95);
-    color: #667eea;
+    color: #475569;
     border-radius: 12px;
     font-size: 14px;
     font-weight: 500;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    will-change: transform;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.15);
 }
 
 .nav-links a:hover {
     background: white;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.15);
+    color: #0891b2;
+    border-color: rgba(14, 165, 233, 0.3);
 }
 
 .nav-links a.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
     color: white;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+    border-color: transparent;
 }
 
 .app-main-content {
@@ -128,34 +134,33 @@ body {
 .card {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    will-change: transform;
 }
 
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(14, 165, 233, 0.15);
 }
 
 .card h2 {
-    margin: 0 0 16px 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #667eea;
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0c4a6e;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .card h2::before {
     content: '';
-    width: 4px;
-    height: 18px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 2px;
+    width: 5px;
+    height: 22px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
+    border-radius: 3px;
 }
 
 ul#service-list {
@@ -177,7 +182,6 @@ ul#service-list li {
     margin-bottom: 8px;
     transition: background 0.2s ease, transform 0.2s ease;
     background: rgba(102, 126, 234, 0.05);
-    will-change: transform;
 }
 
 ul#service-list li span.env {
@@ -246,25 +250,30 @@ textarea {
 
 button {
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 10px;
     border: none;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
     color: white;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    will-change: transform;
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.15);
 }
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
 }
 
 button:active {
     transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
 }
 
 .actions {
@@ -325,7 +334,6 @@ button:active {
     font-size: 12px;
     font-weight: 500;
     transition: transform 0.2s ease;
-    will-change: transform;
 }
 
 .badge:hover {
@@ -376,26 +384,36 @@ button:active {
 
 .stat-card {
     background: rgba(255, 255, 255, 0.95);
-    padding: 24px;
+    padding: 28px 24px;
     border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 12px rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     position: relative;
     overflow: hidden;
-    will-change: transform;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
 }
 
 .stat-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(14, 165, 233, 0.15);
 }
 
 .stat-card h3 {
-    margin: 0 0 12px 0;
-    color: #667eea;
+    margin: 0 0 14px 0;
+    color: #64748b;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     position: relative;
@@ -403,12 +421,12 @@ button:active {
 }
 
 .stat-card .value {
-    font-size: 36px;
-    font-weight: 700;
-    color: #333;
+    font-size: 40px;
+    font-weight: 800;
+    color: #0c4a6e;
     position: relative;
     z-index: 1;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -517,24 +535,23 @@ button:active {
 
 .server-card {
     background: rgba(255, 255, 255, 0.95);
-    padding: 24px;
+    padding: 28px;
     border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 12px rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    will-change: transform;
 }
 
 .server-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 30px rgba(14, 165, 233, 0.15);
 }
 
 .server-card h3 {
-    margin: 0 0 16px 0;
-    color: #333;
-    font-size: 18px;
-    font-weight: 600;
+    margin: 0 0 20px 0;
+    color: #0c4a6e;
+    font-size: 20px;
+    font-weight: 700;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -542,34 +559,37 @@ button:active {
 
 .status-badge {
     display: inline-block;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 600;
     transition: transform 0.2s ease;
-    will-change: transform;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .status-badge:hover {
     transform: scale(1.05);
 }
 
-.status-badge.online {
+.status-badge.online,
+.status-badge.running {
     background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
     color: white;
-    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 2px 12px rgba(16, 185, 129, 0.25);
 }
 
-.status-badge.offline {
-    background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+.status-badge.offline,
+.status-badge.stopped {
+    background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
     color: white;
-    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 2px 12px rgba(100, 116, 139, 0.25);
 }
 
-.status-badge.maintenance {
+.status-badge.maintenance,
+.status-badge.error {
     background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
     color: white;
-    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25);
 }
 
 .server-info {
@@ -602,11 +622,12 @@ button:active {
 }
 
 .resource-bar-track {
-    height: 10px;
-    background: rgba(102, 126, 234, 0.1);
-    border-radius: 10px;
+    height: 12px;
+    background: rgba(14, 165, 233, 0.1);
+    border-radius: 12px;
     overflow: hidden;
     position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .resource-bar-fill {
@@ -618,14 +639,17 @@ button:active {
 
 .resource-bar-fill.low {
     background: linear-gradient(90deg, #34d399 0%, #10b981 100%);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
 }
 
 .resource-bar-fill.medium {
     background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
 }
 
 .resource-bar-fill.high {
     background: linear-gradient(90deg, #f87171 0%, #ef4444 100%);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
 }
 
 .server-actions {
@@ -656,7 +680,8 @@ button:active {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(14, 165, 233, 0.25);
+    backdrop-filter: blur(4px);
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -668,12 +693,13 @@ button:active {
 }
 
 .modal {
-    background: white;
-    padding: 32px;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 36px;
     border-radius: 20px;
     width: 520px;
     max-width: 90%;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 24px rgba(14, 165, 233, 0.12);
+    border: 1px solid rgba(14, 165, 233, 0.15);
     animation: slideInUp 0.3s ease-out;
 }
 
@@ -689,9 +715,10 @@ button:active {
 }
 
 .modal h2 {
-    margin: 0 0 24px 0;
-    font-size: 24px;
-    color: #667eea;
+    margin: 0 0 28px 0;
+    font-size: 26px;
+    color: #0c4a6e;
+    font-weight: 700;
 }
 
 .modal-form label {
@@ -702,19 +729,22 @@ button:active {
 .modal-form label input,
 .modal-form label select {
     width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
+    padding: 14px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
     font-size: 14px;
     margin-top: 8px;
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .modal-form label input:focus,
 .modal-form label select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    background: white;
 }
 
 .modal-actions {
@@ -750,9 +780,8 @@ button:active {
     background: rgba(255, 255, 255, 0.95);
     padding: 28px 32px;
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.1);
     margin-bottom: 24px;
 }
 
@@ -785,7 +814,7 @@ button:active {
     border-radius: 20px;
     font-size: 13px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     color: #667eea;
     font-weight: 500;
 }
@@ -794,15 +823,14 @@ button:active {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
 }
 
 .chat-box {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.1);
     overflow: hidden;
 }
 
@@ -914,13 +942,13 @@ button:active {
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
 }
 
 .chat-input button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
 }
 
 .chat-input button:disabled {
@@ -1082,30 +1110,54 @@ button:active {
 
 .process-card {
     background: rgba(255, 255, 255, 0.95);
-    padding: 24px;
+    padding: 28px;
     border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-    animation: fadeIn 0.5s ease-out;
+    box-shadow: 0 2px 12px rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: fadeIn 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.process-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0ea5e9 0%, #0891b2 100%);
+}
+
+.process-card:hover::before {
+    background: linear-gradient(90deg, #0ea5e9 0%, #0891b2 50%, #0ea5e9 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .process-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(14, 165, 233, 0.15);
 }
 
 .process-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
 .process-header h3 {
     margin: 0;
-    font-size: 18px;
-    color: #333;
+    font-size: 20px;
+    color: #0c4a6e;
+    font-weight: 700;
 }
 
 .process-info {
@@ -1343,66 +1395,72 @@ button:active {
 /* Thread Monitor specific styles */
 .thread-card {
     background: rgba(255, 255, 255, 0.95);
-    padding: 16px;
+    padding: 20px;
     border-radius: 12px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(102, 126, 234, 0.1);
-    transition: all 0.2s ease;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 6px rgba(14, 165, 233, 0.06);
+    border: 1px solid rgba(14, 165, 233, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .thread-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.12);
 }
 
 .thread-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .thread-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0c4a6e;
+    margin-bottom: 6px;
 }
 
 .thread-id {
     font-size: 12px;
-    color: #999;
+    color: #64748b;
+    font-weight: 600;
 }
 
 .state-badge {
     display: inline-block;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .state-badge.RUNNABLE {
     background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
     color: white;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
 }
 
 .state-badge.WAITING,
 .state-badge.TIMED_WAITING {
     background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
     color: white;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
 }
 
 .state-badge.BLOCKED {
     background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
     color: white;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
 }
 
 .state-badge.UNKNOWN {
-    background: #e0e0e0;
-    color: #666;
+    background: #e2e8f0;
+    color: #64748b;
 }
 
 .thread-info-grid {
@@ -1575,11 +1633,11 @@ button:active {
 }
 
 .resource-card {
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1616,10 +1674,10 @@ button:active {
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .data-table thead {
